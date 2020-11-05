@@ -85,11 +85,13 @@ workflows:
   build-lint-app:
     jobs:
       - install-dependencies:
+          context: wealthsimple
           filters:
             branches:
               ignore:
                 - master
       - react-native/android_build:
+          context: wealthsimple
           checkout: true
           project_path: ./example/android
           workspace_root: ~/app
@@ -98,28 +100,34 @@ workflows:
               ignore:
                 - master
       - ios_build:
+          context: wealthsimple
           filters:
             branches:
               ignore:
                 - master
       - lint:
+          context: wealthsimple
           requires:
             - install-dependencies
       - validate-flow:
+          context: wealthsimple
           requires:
             - install-dependencies
 
   release:
     jobs:
       - install-dependencies:
+          context: wealthsimple
           filters:
             branches:
               only:
                 - master
       - publish-version:
+          context: wealthsimple
           requires:
             - install-dependencies
       - deploy-docs:
+          context: wealthsimple
           filters:
             branches:
               only:
